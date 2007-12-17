@@ -14,7 +14,6 @@ Patch1:		pstoedit-3.40-parallel.patch
 Patch2:		pstoedit-3.40-automake18.patch
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	automake1.8
 BuildRequires:	bison
 BuildRequires:	ghostscript
