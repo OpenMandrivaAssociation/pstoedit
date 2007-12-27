@@ -1,5 +1,5 @@
-%define version 3.44
-%define release %mkrel 2
+%define version 3.45
+%define release %mkrel 1
 
 %define	major 0
 %define libname %mklibname pstoedit %{major}
@@ -10,11 +10,8 @@ Version:	%{version}
 Release:	%{release}
 License:	GPL
 Source: 	http://home.t-online.de/home/helga.glunz/wglunz/pstoedit/pstoedit-%{version}.tar.bz2
-Patch1:		pstoedit-3.40-parallel.patch
-Patch2:		pstoedit-3.40-automake18.patch
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
-BuildRequires:	automake1.8
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:  ImageMagick-devel
@@ -42,7 +39,7 @@ Currently pstoedit can generate the following formats:
 	- Tcl/Tk
 	- HPGL
 	- AI - Adobe Illustrator Format (based on ps2ai.ps, not a real pstoedit)
-	- WMF - Windows Meta Files 
+	- WMF - Windows Meta Files
 	- PIC format for troff/groff
 	- MetaPost format per usage with TeX/LaTeX
 	- LaTeX2e picture
@@ -74,17 +71,15 @@ additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
 %setup -q
-%patch1 -p1 -b .parallel
-#%patch2 -p1 -b .automake18
 
 # clean up permissions
 find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r chmod 0644
 
-AUTOMAKE=automake-1.9 ACLOCAL=aclocal-1.9 autoreconf --force --install
+#AUTOMAKE=automake-1.9 ACLOCAL=aclocal-1.9 autoreconf --force --install
 
 %build
 %configure2_5x --enable-static
-%make
+make
 
 %install
 rm -rf %{buildroot}
@@ -105,7 +100,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc doc/changelog.htm doc/index.htm doc/readme.txt 
+%doc doc/changelog.htm doc/index.htm doc/readme.txt
 %doc readme.install examples
 %{_bindir}/pstoedit
 %{_datadir}/pstoedit
