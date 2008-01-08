@@ -1,5 +1,5 @@
 %define version 3.45
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define	major 0
 %define libname %mklibname pstoedit %{major}
@@ -14,7 +14,7 @@ URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
 BuildRequires:	bison
 BuildRequires:	ghostscript
-BuildRequires:  ImageMagick-devel
+BuildRequires:  imagemagick-devel
 %if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
 %endif
