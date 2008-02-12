@@ -21,6 +21,7 @@ BuildRequires:	multiarch-utils >= 1.0.3
 Requires:	%{libname} = %{version}
 # not compatible
 BuildConflicts:	ming-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 pstoedit translates PostScript and PDF graphics into other vector formats.
