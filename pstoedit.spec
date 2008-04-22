@@ -1,5 +1,5 @@
 %define version 3.45
-%define release %mkrel 4
+%define release %mkrel 5
 
 %define	major 0
 %define libname %mklibname pstoedit %{major}
@@ -15,6 +15,7 @@ Group:		Graphics
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:  imagemagick-devel
+BuildRequires:	plotutils-devel
 %if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
 %endif
@@ -79,6 +80,8 @@ find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r
 #AUTOMAKE=automake-1.9 ACLOCAL=aclocal-1.9 autoreconf --force --install
 
 %build
+# needed because of definitions in imagemagick headers that break with -pedantic
+sed -ie 's/-pedantic//' configure
 %configure2_5x --enable-static
 make
 
