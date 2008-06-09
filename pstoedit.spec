@@ -95,9 +95,13 @@ install -D -m 644 doc/pstoedit.1 %{buildroot}%{_mandir}/man1/pstoedit.1
 # remove unneeded files
 rm -f %{buildroot}%{_libdir}/%{name}/*.{a,la}
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %clean
 rm -rf %{buildroot}
