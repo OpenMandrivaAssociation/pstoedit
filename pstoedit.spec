@@ -10,6 +10,7 @@ Version:	%{version}
 Release:	%{release}
 License:	GPL
 Source: 	http://home.t-online.de/home/helga.glunz/wglunz/pstoedit/pstoedit-%{version}.tar.bz2
+Patch0:		pstoedit-3.45-gcc-4.3.patch
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
 BuildRequires:	bison
@@ -73,6 +74,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
 %setup -q
+%patch0 -p0
 
 # clean up permissions
 find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r chmod 0644
