@@ -1,8 +1,9 @@
 %define version 3.45
-%define release %mkrel 6
+%define release %mkrel 7
 
 %define	major 0
 %define libname %mklibname pstoedit %{major}
+%define develname %mklibname pstoedit -d
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
@@ -11,15 +12,14 @@ Release:	%{release}
 License:	GPL
 Source: 	http://home.t-online.de/home/helga.glunz/wglunz/pstoedit/pstoedit-%{version}.tar.bz2
 Patch0:		pstoedit-3.45-gcc-4.3.patch
+Patch1:		pstoedit-3.45-module-build.patch
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:  imagemagick-devel
 BuildRequires:	plotutils-devel
-%if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
-%endif
 Requires:	%{libname} = %{version}
 # not compatible
 BuildConflicts:	ming-devel
@@ -60,14 +60,15 @@ Group:		System/Libraries
 This package contains the libraries needed to run programs dynamically
 linked with pstoedit libraries.
 
-%package -n %{libname}-devel
+%package -n %{develname}
 Summary:	Static libraries and header files for pstoedit development
 Group:		Development/C
 Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}
+Obsoletes:	%{_lib}pstoedit0-devel < %{version}-%{release}
 
-%description -n %{libname}-devel
+%description -n %{develname}
 If you want to create applications that will use pstoedit code or
 APIs, you'll need to install these packages as well as pstoedit. This
 additional package isn't necessary if you simply want to use pstoedit.
@@ -75,6 +76,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p0 -b .link
 
 # clean up permissions
 find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r chmod 0644
@@ -85,7 +87,7 @@ find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r
 # needed because of definitions in imagemagick headers that break with -pedantic
 sed -ie 's/-pedantic//' configure
 %configure2_5x --enable-static
-make
+%make
 
 %install
 rm -rf %{buildroot}
@@ -119,10 +121,9 @@ rm -rf %{buildroot}
 %files -n %{libname}
 %defattr(-,root,root,755)
 %{_libdir}/*.so.*
-%{_libdir}/pstoedit/*.so.*
 %{_libdir}/pstoedit/*.so
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc doc/pstoedit.htm
 %{_includedir}/pstoedit
@@ -131,5 +132,3 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/aclocal/*.m4
-
-
