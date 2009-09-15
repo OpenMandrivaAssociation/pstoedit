@@ -1,5 +1,5 @@
 %define version 3.45
-%define release %mkrel 7
+%define release %mkrel 8
 
 %define	major 0
 %define libname %mklibname pstoedit %{major}
