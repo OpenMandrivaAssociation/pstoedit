@@ -1,7 +1,7 @@
-%define version 3.45
-%define release %mkrel 8
+%define version 3.50
+%define release %mkrel 1
 
-%define	major 0
+%define major 0
 %define libname %mklibname pstoedit %{major}
 %define develname %mklibname pstoedit -d
 
@@ -10,9 +10,8 @@ Name:		pstoedit
 Version:	%{version}
 Release:	%{release}
 License:	GPL
-Source: 	http://home.t-online.de/home/helga.glunz/wglunz/pstoedit/pstoedit-%{version}.tar.bz2
-Patch0:		pstoedit-3.45-gcc-4.3.patch
-Patch1:		pstoedit-3.45-module-build.patch
+Source: 	http://prdownloads.sourceforge.net/pstoedit/pstoedit-%{version}.tar.gz
+Patch1: 	pstoedit-3.50-module-build.patch
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
 BuildRequires:	bison
@@ -75,8 +74,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0 -b .link
+%patch1 -p1 -b .link
 
 # clean up permissions
 find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r chmod 0644
