@@ -89,9 +89,6 @@ rm -rf %{buildroot}
 install -D -m 644 doc/pstoedit.1 %{buildroot}%{_mandir}/man1/pstoedit.1
 
 
-# remove unneeded files
-rm -f %{buildroot}%{_libdir}/%{name}/*.{a,la}
-
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
 %endif
@@ -121,7 +118,6 @@ rm -rf %{buildroot}
 %doc doc/pstoedit.htm
 %{_includedir}/pstoedit
 %{_libdir}/*.a
-%{_libdir}/*.la
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/aclocal/*.m4
