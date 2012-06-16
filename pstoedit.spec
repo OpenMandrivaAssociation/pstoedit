@@ -15,7 +15,6 @@ BuildRequires:	ghostscript
 BuildRequires:  imagemagick-devel
 BuildRequires:	plotutils-devel
 BuildRequires:	multiarch-utils >= 1.0.3
-Requires:	%{libname} = %{version}
 # not compatible
 BuildConflicts:	ming-devel
 
@@ -57,7 +56,6 @@ linked with pstoedit libraries.
 %package -n	%{devname}
 Summary:	Static libraries and header files for pstoedit development
 Group:		Development/C
-Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}
 Obsoletes:	%{_lib}pstoedit0-devel < %{version}-%{release}
