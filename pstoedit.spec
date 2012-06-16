@@ -1,13 +1,13 @@
-%define major 0
-%define libname %mklibname pstoedit %{major}
-%define develname %mklibname pstoedit -d
+%define	major	0
+%define	libname	%mklibname pstoedit %{major}
+%define	devname	%mklibname pstoedit -d
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
 Version:	3.60
 Release:	1
 License:	GPL
-Source: 	http://prdownloads.sourceforge.net/pstoedit/pstoedit-%{version}.tar.gz
+Source0: 	http://prdownloads.sourceforge.net/pstoedit/%{name}-%{version}.tar.gz
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
 BuildRequires:	bison
@@ -18,7 +18,6 @@ BuildRequires:	multiarch-utils >= 1.0.3
 Requires:	%{libname} = %{version}
 # not compatible
 BuildConflicts:	ming-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 pstoedit translates PostScript and PDF graphics into other vector formats.
@@ -47,15 +46,15 @@ Currently pstoedit can generate the following formats:
 	- Mathematica
 	- trough ImageMagick to any format supported by ImageMagick
 
-%package -n %{libname}
+%package -n	%{libname}
 Summary:	Pstoedit libraries
 Group:		System/Libraries
 
-%description -n %{libname}
+%description -n	%{libname}
 This package contains the libraries needed to run programs dynamically
 linked with pstoedit libraries.
 
-%package -n %{develname}
+%package -n	%{devname}
 Summary:	Static libraries and header files for pstoedit development
 Group:		Development/C
 Provides:	lib%{name}-devel = %{version}-%{release}
@@ -63,7 +62,7 @@ Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}
 Obsoletes:	%{_lib}pstoedit0-devel < %{version}-%{release}
 
-%description -n %{develname}
+%description -n	%{devname}
 If you want to create applications that will use pstoedit code or
 APIs, you'll need to install these packages as well as pstoedit. This
 additional package isn't necessary if you simply want to use pstoedit.
@@ -83,27 +82,13 @@ sed -ie 's/-pedantic//' configure
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
-install -D -m 644 doc/pstoedit.1 %{buildroot}%{_mandir}/man1/pstoedit.1
-
+install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
 
 rm -f %{buildroot}%{_libdir}/%{name}/*.a
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc doc/changelog.htm doc/index.htm doc/readme.txt
 %doc readme.install examples
 %{_bindir}/pstoedit
@@ -111,13 +96,11 @@ rm -rf %{buildroot}
 %{_mandir}/man1/*.1*
 
 %files -n %{libname}
-%defattr(-,root,root,755)
 %{_libdir}/*.so.*
 %{_libdir}/pstoedit/*.so
 %{_libdir}/pstoedit/*.so.%{major}*
 
-%files -n %{develname}
-%defattr(-,root,root)
+%files -n %{devname}
 %doc doc/pstoedit.htm
 %{_includedir}/pstoedit
 %{_libdir}/*.a
