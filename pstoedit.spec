@@ -6,7 +6,7 @@ Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
 Version:	3.60
 Release:	1
-License:	GPL
+License:	GPLv2+
 Source0: 	http://prdownloads.sourceforge.net/pstoedit/%{name}-%{version}.tar.gz
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
