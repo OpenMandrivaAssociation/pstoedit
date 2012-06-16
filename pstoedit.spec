@@ -1,17 +1,13 @@
-%define version 3.50
-%define release %mkrel 3
-
 %define major 0
 %define libname %mklibname pstoedit %{major}
 %define develname %mklibname pstoedit -d
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
-Version:	%{version}
-Release:	%{release}
+Version:	3.60
+Release:	1
 License:	GPL
 Source: 	http://prdownloads.sourceforge.net/pstoedit/pstoedit-%{version}.tar.gz
-Patch1: 	pstoedit-3.50-module-build.patch
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
 BuildRequires:	bison
@@ -74,7 +70,6 @@ additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
 %setup -q
-%patch1 -p1 -b .link
 
 # clean up permissions
 find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r chmod 0644
