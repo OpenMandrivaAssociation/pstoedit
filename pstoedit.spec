@@ -89,6 +89,8 @@ rm -rf %{buildroot}
 install -D -m 644 doc/pstoedit.1 %{buildroot}%{_mandir}/man1/pstoedit.1
 
 
+rm -f %{buildroot}%{_libdir}/%{name}/*.a
+
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
 %endif
@@ -112,6 +114,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,755)
 %{_libdir}/*.so.*
 %{_libdir}/pstoedit/*.so
+%{_libdir}/pstoedit/*.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
