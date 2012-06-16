@@ -56,8 +56,8 @@ linked with pstoedit libraries.
 %package -n	%{devname}
 Summary:	Static libraries and header files for pstoedit development
 Group:		Development/C
-Provides:	%{name}-devel = %{version}-%{release}
-Requires:	%{libname} = %{version}
+Provides:	%{name}-devel = %{EVRD}
+Requires:	%{libname} = %{EVRD}
 %rename		%{_lib}pstoedit0-devel
 
 %description -n	%{devname}
