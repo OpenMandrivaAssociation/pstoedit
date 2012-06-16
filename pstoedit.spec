@@ -58,7 +58,7 @@ Summary:	Static libraries and header files for pstoedit development
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}
-Obsoletes:	%{_lib}pstoedit0-devel < %{version}-%{release}
+%rename		%{_lib}pstoedit0-devel
 
 %description -n	%{devname}
 If you want to create applications that will use pstoedit code or
