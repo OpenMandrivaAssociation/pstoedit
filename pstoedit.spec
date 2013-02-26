@@ -69,7 +69,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 %setup -q
 
 # clean up permissions
-find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r chmod 0644
+#find -type f -perm +111 | xargs -r file | grep -v script | cut -d: -f1| xargs -r chmod 0644
 
 #AUTOMAKE=automake-1.9 ACLOCAL=aclocal-1.9 autoreconf --force --install
 
