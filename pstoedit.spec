@@ -4,10 +4,10 @@
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
-Version:	3.61
-Release:	2
+Version:	3.62
+Release:	1
 License:	GPLv2+
-Source0:	http://prdownloads.sourceforge.net/pstoedit/%{name}-%{version}.tar.gz
+Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/3.62/%{name}-%{version}.tar.gz
 URL:		http://www.pstoedit.net/pstoedit
 Group:		Graphics
 BuildRequires:	bison
@@ -226,4 +226,5 @@ rm -f %{buildroot}%{_libdir}/%{name}/*.a
 - P1: Allow parallel build
 - Add missing buildrequires
 - Other build cleanup
+
 
