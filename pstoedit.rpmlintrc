@@ -1,0 +1,2 @@
+# *.so files are loadable drivers, not devel files
+addFilter("E: devel-file-in-non-devel-package")

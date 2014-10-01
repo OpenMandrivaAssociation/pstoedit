@@ -3,25 +3,29 @@
 %define libp2edrvlplot %mklibname p2edrvlplot %{major}
 %define libp2edrvmagickpp %mklibname p2edrvmagick++ %{major}
 %define libp2edrvstd %mklibname p2edrvstd %{major}
+%define libp2edrvpptx %mklibname p2edrvpptx %{major}
 %define	devname	%mklibname pstoedit -d
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
 Version:	3.62
-Release:	11
+Release:	12
 License:	GPLv2+
 Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
 Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/3.62/%{name}-%{version}.tar.gz
+Source100:	%{name}.rpmlintrc
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
 BuildRequires:	pkgconfig(ImageMagick)
+BuildRequires:	pkgconfig(libzip)
 # not compatible
 BuildConflicts:	ming-devel
 Suggests:	%{libp2edrvlplot} = %{version}-%{release}
 Suggests:	%{libp2edrvmagickpp} = %{version}-%{release}
 Suggests:	%{libp2edrvstd} = %{version}-%{release}
+Suggests:	%{libp2edrvpptx} = %{version}-%{release}
 
 %description
 pstoedit translates PostScript and PDF graphics into other vector formats.
@@ -81,6 +85,14 @@ Conflicts:	%{_lib}pstoedit0 < 3.62-3
 %description -n	%{libp2edrvstd}
 This package contains a shared library for %{name}.
 
+%package -n     %{libp2edrvpptx}
+Summary:        Pstoedit libraries
+Group:          System/Libraries
+Conflicts:      %{_lib}pstoedit0 < 3.62-3
+
+%description -n %{libp2edrvpptx}
+This package contains a shared library for %{name}.
+
 %package -n	%{devname}
 Summary:	Development libraries and header files for pstoedit development
 Group:		Development/C
@@ -89,6 +101,7 @@ Requires:	%{libname} = %{version}-%{release}
 Requires:	%{libp2edrvlplot} = %{version}-%{release}
 Requires:	%{libp2edrvmagickpp} = %{version}-%{release}
 Requires:	%{libp2edrvstd} = %{version}-%{release}
+Requires:       %{libp2edrvpptx} = %{version}-%{release}
 Conflicts:	%{_lib}pstoedit0 < 3.62-3
 
 %description -n	%{devname}
@@ -122,18 +135,24 @@ install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
 
 %files -n %{libp2edrvlplot}
 %{_libdir}/pstoedit/libp2edrvlplot.so.%{major}*
+%{_libdir}/pstoedit/libp2edrvlplot.so
 
 %files -n %{libp2edrvmagickpp}
 %{_libdir}/pstoedit/libp2edrvmagick++.so.%{major}*
+%{_libdir}/pstoedit/libp2edrvmagick++.so
 
 %files -n %{libp2edrvstd}
 %{_libdir}/pstoedit/libp2edrvstd.so.%{major}*
+%{_libdir}/pstoedit/libp2edrvstd.so
+
+%files -n %{libp2edrvpptx}
+%{_libdir}/pstoedit/libp2edrvpptx.so.%{major}*
+%{_libdir}/pstoedit/libp2edrvpptx.so
 
 %files -n %{devname}
 %doc doc/pstoedit.htm
 %{_includedir}/pstoedit
 %{_libdir}/*.so
-%{_libdir}/pstoedit/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/aclocal/*.m4
 
