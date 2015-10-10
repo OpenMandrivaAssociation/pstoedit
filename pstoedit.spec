@@ -8,8 +8,8 @@
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
-Version:	3.62
-Release:	12
+Version:	3.70
+Release:	1
 License:	GPLv2+
 Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
@@ -115,7 +115,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 %build
 # needed because of definitions in imagemagick headers that break with -pedantic
 sed -ie 's/-pedantic//' configure
-%configure2_5x
+%configure
 %make
 
 %install
@@ -124,7 +124,7 @@ sed -ie 's/-pedantic//' configure
 install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
 
 %files
-%doc doc/changelog.htm doc/index.htm doc/readme.txt
+%doc doc/changelog.htm doc/pstoedit.htm doc/readme.txt
 %doc readme.install examples
 %{_bindir}/pstoedit
 %{_datadir}/pstoedit
