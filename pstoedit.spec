@@ -15,6 +15,7 @@ Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
 Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/%{version}/%{name}-%{version}.tar.gz
 Source100:	%{name}.rpmlintrc
+Patch1:		pstoedit-3.70-pkgconfig.patch
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
@@ -113,6 +114,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
 %setup -q
+%apply_patches
 
 %build
 # needed because of definitions in imagemagick headers that break with -pedantic
