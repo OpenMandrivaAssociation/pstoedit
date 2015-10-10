@@ -13,7 +13,7 @@ Release:	1
 License:	GPLv2+
 Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
-Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/3.62/%{name}-%{version}.tar.gz
+Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/%{version}/%{name}-%{version}.tar.gz
 Source100:	%{name}.rpmlintrc
 BuildRequires:	bison
 BuildRequires:	ghostscript
