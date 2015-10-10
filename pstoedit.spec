@@ -20,6 +20,8 @@ BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
 BuildRequires:	pkgconfig(ImageMagick)
 BuildRequires:	pkgconfig(libzip)
+BuildRequires:	pkgconfig(libpng)
+
 # not compatible
 BuildConflicts:	ming-devel
 Suggests:	%{libp2edrvlplot} = %{version}-%{release}
