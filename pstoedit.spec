@@ -1,4 +1,4 @@
-%define	major	0
+%define	major 0
 %define	libname	%mklibname pstoedit %{major}
 %define libp2edrvlplot %mklibname p2edrvlplot %{major}
 %define libp2edrvmagickpp %mklibname p2edrvmagick++ %{major}
@@ -9,7 +9,7 @@
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
 Version:	3.70
-Release:	4
+Release:	5
 License:	GPLv2+
 Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
