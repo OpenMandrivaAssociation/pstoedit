@@ -19,6 +19,7 @@ BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
 BuildRequires:	pkgconfig(ImageMagick)
+BuildRequires:	pkgconfig(ImageMagick++)
 BuildRequires:	pkgconfig(libzip)
 BuildRequires:	pkgconfig(libpng)
 
@@ -154,6 +155,7 @@ install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
 
 %files -n %{devname}
 %doc doc/pstoedit.htm
+%doc %{_docdir}/pstoedit
 %{_includedir}/pstoedit
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
