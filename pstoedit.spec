@@ -113,7 +113,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 # needed because of definitions in imagemagick headers that break with -pedantic
