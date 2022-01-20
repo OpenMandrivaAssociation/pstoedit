@@ -8,17 +8,19 @@
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
-Version:	3.75
+Version:	3.78
 Release:	1
 License:	GPLv2+
 Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
 Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/%{version}/%{name}-%{version}.tar.gz
 Source100:	%{name}.rpmlintrc
+Patch0:		fix-ImageMagick++-detection.patch
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
-BuildRequires:	imagemagick6-devel
+BuildRequires:	pkgconfig(MagickCore)
+BuildRequires:	pkgconfig(Magick++)
 BuildRequires:	pkgconfig(libzip)
 BuildRequires:	pkgconfig(libpng)
 
