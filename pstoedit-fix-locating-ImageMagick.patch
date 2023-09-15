@@ -1,0 +1,12 @@
+diff -up pstoedit-4.00/configure.ac.omv~ pstoedit-4.00/configure.ac
+--- pstoedit-4.00/configure.ac.omv~	2023-09-15 15:37:48.166838430 +0200
++++ pstoedit-4.00/configure.ac	2023-09-15 15:37:59.386785078 +0200
+@@ -314,7 +314,7 @@ if test "x${PSTOEDIT_GCC_OK}" = xno ; th
+ else
+       if test -n "$PKG_CONFIG"; then
+         AC_MSG_CHECKING(ImageMagick flags through pkg-config)
+-	PKG_CHECK_MODULES(LIBMAGICK, ImageMagick++, 
++	PKG_CHECK_MODULES(LIBMAGICK, Magick++, 
+ 		HAVE_LIBMAGICK=yes 
+ 		LIBMAGICK_CFLAGS="-DHAVE_MAGIC $LIBMAGICK_CFLAGS" 
+ 		LIBMAGICK_LDFLAGS="$LIBMAGICK_LIBS" , 

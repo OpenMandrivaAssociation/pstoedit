@@ -1,21 +1,22 @@
 %define	major 0
 %define	libname	%mklibname pstoedit %{major}
-%define libp2edrvlplot %mklibname p2edrvlplot %{major}
-%define libp2edrvmagickpp %mklibname p2edrvmagick++ %{major}
-%define libp2edrvstd %mklibname p2edrvstd %{major}
-%define libp2edrvpptx %mklibname p2edrvpptx %{major}
+%define oldlibp2edrvlplot %mklibname p2edrvlplot 0
+%define oldlibp2edrvmagickpp %mklibname p2edrvmagick++ 0
+%define oldlibp2edrvstd %mklibname p2edrvstd 0
+%define oldlibp2edrvpptx %mklibname p2edrvpptx 0
 %define	devname	%mklibname pstoedit -d
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
-Version:	3.78
-Release:	2
+Version:	4.00
+Release:	1
 License:	GPLv2+
 Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
 Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/%{version}/%{name}-%{version}.tar.gz
 Source100:	%{name}.rpmlintrc
-Patch0:		fix-ImageMagick++-detection.patch
+Patch0:		pstoedit-fix-locating-ImageMagick.patch
+Patch1:		pstoedit-4.00-gui-compile.patch
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
@@ -23,13 +24,17 @@ BuildRequires:	pkgconfig(MagickCore)
 BuildRequires:	pkgconfig(Magick++)
 BuildRequires:	pkgconfig(libzip)
 BuildRequires:	pkgconfig(libpng)
+BuildRequires:	imagemagick
+# For GUI
+BuildRequires:	qmake-qt6
+BuildRequires:	cmake(Qt6Core)
+BuildRequires:	cmake(Qt6Gui)
+BuildRequires:	cmake(Qt6Network)
+BuildRequires:	cmake(Qt6Concurrent)
+BuildRequires:	cmake(Qt6Widgets)
 
 # not compatible
 BuildConflicts:	ming-devel
-Suggests:	%{libp2edrvlplot} = %{version}-%{release}
-Suggests:	%{libp2edrvmagickpp} = %{version}-%{release}
-Suggests:	%{libp2edrvstd} = %{version}-%{release}
-Suggests:	%{libp2edrvpptx} = %{version}-%{release}
 
 %description
 pstoedit translates PostScript and PDF graphics into other vector formats.
@@ -61,51 +66,28 @@ Currently pstoedit can generate the following formats:
 %package -n	%{libname}
 Summary:	Pstoedit libraries
 Group:		System/Libraries
+%rename	%{oldlibp2edrvlplot}
+%rename %{oldlibp2edrvmagickpp}
+%rename %{oldlibp2edrvstd}
+%rename %{oldlibp2edrvpptx}
 
 %description -n	%{libname}
 This package contains a shared library for %{name}.
 
-%package -n	%{libp2edrvlplot}
-Summary:	Pstoedit libraries
-Group:		System/Libraries
-Conflicts:	%{_lib}pstoedit0 < 3.62-3
+%package gui
+Summary:	Graphical user interface for pstoedit
+Group:		Graphics
+Requires:	%{name} = %{EVRD}
 
-%description -n	%{libp2edrvlplot}
-This package contains a shared library for %{name}.
-
-%package -n	%{libp2edrvmagickpp}
-Summary:	Pstoedit libraries
-Group:		System/Libraries
-Conflicts:	%{_lib}pstoedit0 < 3.62-3
-
-%description -n	%{libp2edrvmagickpp}
-This package contains a shared library for %{name}.
-
-%package -n	%{libp2edrvstd}
-Summary:	Pstoedit libraries
-Group:		System/Libraries
-Conflicts:	%{_lib}pstoedit0 < 3.62-3
-
-%description -n	%{libp2edrvstd}
-This package contains a shared library for %{name}.
-
-%package -n     %{libp2edrvpptx}
-Summary:        Pstoedit libraries
-Group:          System/Libraries
-Conflicts:      %{_lib}pstoedit0 < 3.62-3
-
-%description -n %{libp2edrvpptx}
-This package contains a shared library for %{name}.
+%description gui
+Graphical user interface for pstoedit, a PostScript/PDF to
+vector graphics converter
 
 %package -n	%{devname}
 Summary:	Development libraries and header files for pstoedit development
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libp2edrvlplot} = %{version}-%{release}
-Requires:	%{libp2edrvmagickpp} = %{version}-%{release}
-Requires:	%{libp2edrvstd} = %{version}-%{release}
-Requires:       %{libp2edrvpptx} = %{version}-%{release}
 Conflicts:	%{_lib}pstoedit0 < 3.62-3
 
 %description -n	%{devname}
@@ -114,19 +96,35 @@ APIs, you'll need to install these packages as well as pstoedit. This
 additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
+# needed because of definitions in imagemagick headers that break with -pedantic
+#sed -ie 's/-pedantic//' configure
+%configure
 
 %build
-# needed because of definitions in imagemagick headers that break with -pedantic
-sed -ie 's/-pedantic//' configure
-%configure
-%make
+%make_build
+%make_build -C QT/PstoeditQtGui GUI
 
 %install
-%makeinstall_std
-
+%make_install
 install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
+
+cd QT/PstoeditQtGui
+install -m755 PstoeditQtGui %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_datadir}/applications
+cat  >%{buildroot}%{_datadir}/applications/%{name}.desktop <<'EOF'
+[Desktop Entry]
+Name=PS to Edit
+Comment=Convert PostScript files to editable vector graphics
+Categories=Qt;Graphics;
+Exec=%{_bindir}/PstoeditQtGui
+Icon=pstoedit
+Type=Application
+EOF
+for size in 16 22 24 32 44 48 64 72 96 128; do
+	mkdir -p %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps
+	convert *.ico -gravity center -scale ${size}x${size} -extent ${size}x${size} %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/%{name}.png
+done
 
 %files
 %doc doc/changelog.htm doc/pstoedit.htm doc/readme.txt
@@ -137,21 +135,10 @@ install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
 
 %files -n %{libname}
 %{_libdir}/libpstoedit.so.%{major}*
-
-%files -n %{libp2edrvlplot}
-%{_libdir}/pstoedit/libp2edrvlplot.so.%{major}*
+%dir %{_libdir}/pstoedit
 %{_libdir}/pstoedit/libp2edrvlplot.so
-
-%files -n %{libp2edrvmagickpp}
-%{_libdir}/pstoedit/libp2edrvmagick++.so.%{major}*
 %{_libdir}/pstoedit/libp2edrvmagick++.so
-
-%files -n %{libp2edrvstd}
-%{_libdir}/pstoedit/libp2edrvstd.so.%{major}*
 %{_libdir}/pstoedit/libp2edrvstd.so
-
-%files -n %{libp2edrvpptx}
-%{_libdir}/pstoedit/libp2edrvpptx.so.%{major}*
 %{_libdir}/pstoedit/libp2edrvpptx.so
 
 %files -n %{devname}
@@ -161,3 +148,8 @@ install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/aclocal/*.m4
+
+%files gui
+%{_bindir}/PstoeditQtGui
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
