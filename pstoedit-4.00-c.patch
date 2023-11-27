@@ -1,0 +1,13 @@
+diff -up pstoedit-4.00/src/pstoedit.h.omv~ pstoedit-4.00/src/pstoedit.h
+--- pstoedit-4.00/src/pstoedit.h.omv~	2023-11-27 19:09:17.665390163 +0000
++++ pstoedit-4.00/src/pstoedit.h	2023-11-27 19:09:37.025695943 +0000
+@@ -100,8 +100,8 @@ void clearPstoeditDriverInfo_plainC(stru
+ 
+ #ifdef __cplusplus
+ extern "C" DLLEXPORT
+-#endif
+ void loadpstoeditplugins(const char* progname, std::ostream & errstream, bool verbose);
++#endif
+ 
+ #ifdef __cplusplus
+ extern "C" DLLEXPORT

@@ -9,7 +9,7 @@
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
 Version:	4.00
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Graphics
 Url:		http://www.pstoedit.net/pstoedit
@@ -17,6 +17,9 @@ Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/%{version}/%{n
 Source100:	%{name}.rpmlintrc
 Patch0:		pstoedit-fix-locating-ImageMagick.patch
 Patch1:		pstoedit-4.00-gui-compile.patch
+# Don't make a function taking a "std::ostream &" as parameter
+# visible to C (not C++) compilers...
+Patch2:		pstoedit-4.00-c.patch
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
