@@ -12,7 +12,7 @@ Version:	4.01
 Release:	1
 License:	GPLv2+
 Group:		Graphics
-Url:		http://www.pstoedit.net/pstoedit
+Url:		https://www.pstoedit.net/pstoedit
 Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/%{version}/%{name}-%{version}.tar.gz
 Source100:	%{name}.rpmlintrc
 Patch0:		pstoedit-fix-locating-ImageMagick.patch
