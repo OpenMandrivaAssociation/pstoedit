@@ -8,7 +8,7 @@
 
 Summary:	Translates PostScript/PDF graphics into other vector formats
 Name:		pstoedit
-Version:	4.01
+Version:	4.02
 Release:	1
 License:	GPLv2+
 Group:		Graphics
@@ -96,8 +96,7 @@ additional package isn't necessary if you simply want to use pstoedit.
 
 %prep
 %autosetup -p1
-# needed because of definitions in imagemagick headers that break with -pedantic
-#sed -ie 's/-pedantic//' configure
+sed -i -e 's,qmake6,qmake-qt6,g' configure* QT/PstoeditQtGui/Make*
 %configure
 
 %build
@@ -114,16 +113,6 @@ install -m644 doc/pstoedit.1 -D %{buildroot}%{_mandir}/man1/pstoedit.1
 
 cd QT/PstoeditQtGui
 install -m755 PstoeditQtGui %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_datadir}/applications
-cat  >%{buildroot}%{_datadir}/applications/%{name}.desktop <<'EOF'
-[Desktop Entry]
-Name=PS to Edit
-Comment=Convert PostScript files to editable vector graphics
-Categories=Qt;Graphics;
-Exec=%{_bindir}/PstoeditQtGui
-Icon=pstoedit
-Type=Application
-EOF
 for size in 16 22 24 32 44 48 64 72 96 128; do
 	mkdir -p %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps
 	convert *.ico -gravity center -scale ${size}x${size} -extent ${size}x${size} %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/%{name}.png
@@ -154,5 +143,5 @@ done
 
 %files gui
 %{_bindir}/PstoeditQtGui
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/PstoeditQtGui.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
