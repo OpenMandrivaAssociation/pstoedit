@@ -16,6 +16,10 @@ Url:		https://www.pstoedit.net/pstoedit
 Source0:	https://sourceforge.net/projects/pstoedit/files/pstoedit/%{version}/%{name}-%{version}.tar.gz
 Source100:	%{name}.rpmlintrc
 Patch0:		pstoedit-fix-locating-ImageMagick.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	bison
 BuildRequires:	ghostscript
 BuildRequires:	plotutils-devel
